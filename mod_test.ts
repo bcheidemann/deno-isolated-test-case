@@ -1,5 +1,5 @@
 import { assertEquals, assertInstanceOf } from "@std/assert";
-import { isolatedTestCase } from "./main.ts";
+import { isolatedTestCase } from "./mod.ts";
 
 if (!Deno.env.get("DENO_ISOLATED_TEST_CASE_CTX")) {
   isolatedTestCase("should fail if test is not run in isolated context", () => {
