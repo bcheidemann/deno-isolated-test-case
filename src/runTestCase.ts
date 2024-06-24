@@ -1,5 +1,5 @@
 import SuperJSON from "superjson";
-import {
+import type {
   IsolatedTestContext,
   IsolatedTestContextWithConnection,
 } from "./IsolatedTestContext.ts";

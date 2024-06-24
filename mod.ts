@@ -1,6 +1,6 @@
 import { assertRejects } from "@std/assert";
 import {
-  IsolatedTestContext,
+  type IsolatedTestContext,
   IsolatedTestContextWithConnection,
 } from "./src/IsolatedTestContext.ts";
 import { runTestCase } from "./src/runTestCase.ts";
