@@ -4,6 +4,9 @@ import {
   IsolatedTestContextWithConnection,
 } from "./IsolatedTestContext.ts";
 
+/**
+ * @internal
+ */
 export async function runTestCase(
   t: IsolatedTestContextWithConnection,
   fn: (t: IsolatedTestContext) => void | Promise<void>,

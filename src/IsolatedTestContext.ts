@@ -1,9 +1,19 @@
+/**
+ * Similar to Deno.TestContext, but for tests running in their own isolated Deno instance.
+ * 
+ * @implements {Deno.TestContext}
+ */
 export class IsolatedTestContext implements Deno.TestContext {
   protected constructor(
+    /** The current test name. */
     public name: string,
+    /** The string URL of the current test. */
     public origin: string,
   ) {}
 
+  /**
+   * @deprecated This method is not implemented and will error at runtime.
+   */
   step(definition: Deno.TestStepDefinition): Promise<boolean>;
   step(
     name: string,

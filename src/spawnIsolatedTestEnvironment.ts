@@ -3,6 +3,9 @@ import { getAvailablePort } from "@std/net";
 import { IsolatedTestContextWithConnection } from "./IsolatedTestContext.ts";
 import SuperJSON from "superjson";
 
+/**
+ * @internal
+ */
 export async function spawnIsolatedTestEnvironment(t: Deno.TestContext) {
   // deno-lint-ignore no-explicit-any
   let result: any;

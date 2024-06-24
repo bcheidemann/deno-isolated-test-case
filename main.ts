@@ -20,6 +20,23 @@ addEventListener("unload", () => {
   Deno.exitCode = 1;
 });
 
+/**
+ * Runs the test case in its own Deno process.
+ *
+ * @example
+ * ```ts
+ * import { assertEquals } from "@std/assert";
+ * import { isolatedTestCase } from "@bcheidemann/deno-isolated-test-case";
+ *
+ * isolatedTestCase("40 + 2 = 42", () => {
+ *   assertEquals(40 + 2, 42);
+ * });
+ * ```
+ *
+ * @param name The test name
+ * @param fn The test function
+ * @param options (optional) Options to configure the test runner
+ */
 export function isolatedTestCase(
   name: string,
   fn: (t: IsolatedTestContext) => void | Promise<void>,
