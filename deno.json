@@ -1,4 +1,6 @@
 {
+  "name": "@bcheidemann/deno-isolated-test-case",
+  "version": "0.1.0",
   "tasks": {
     "test": "deno test --allow-env=DENO_ISOLATED_TEST_CASE_CTX --allow-net --allow-run=deno"
   },
@@ -6,5 +8,8 @@
     "@std/assert": "jsr:@std/assert@^0.226.0",
     "@std/net": "jsr:@std/net@^0.224.3",
     "superjson": "npm:superjson@^2.2.1"
+  },
+  "exports": {
+    ".": "./mod.ts"
   }
 }
