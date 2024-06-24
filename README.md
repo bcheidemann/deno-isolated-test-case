@@ -1,5 +1,9 @@
 # Deno Isolated Test Case
 
+[![JSR](https://jsr.io/badges/@bcheidemann/deno-isolated-test-case)](https://jsr.io/@bcheidemann/deno-isolated-test-case)
+[![JSR Score](https://jsr.io/badges/@bcheidemann/deno-isolated-test-case/score)](https://jsr.io/@bcheidemann/deno-isolated-test-case)
+![publish workflow](https://github.com/bcheidemann/deno-isolated-test-case/actions/workflows/publish.yml/badge.svg)
+
 ## Overview
 
 Deno Isolated Test Case lets you run test cases in an isolated Deno process.
