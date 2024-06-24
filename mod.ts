@@ -15,7 +15,7 @@ export type Options = {
    */
   assertFailure?: boolean | ((error: unknown) => void | Promise<void>);
   /**
-   * Flags to pass to `deno run`
+   * Flags to pass to `deno run`.
    */
   denoFlags?: string[];
 };
@@ -58,7 +58,9 @@ export function isolatedTestCase(
     }
 
     if (wasTestRun) {
-      console.error(`ERROR: Detected multiple tests with the same name: ${name}`);
+      console.error(
+        `ERROR: Detected multiple tests with the same name: ${name}`,
+      );
       Deno.exit(1);
     }
 

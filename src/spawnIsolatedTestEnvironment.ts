@@ -6,7 +6,10 @@ import SuperJSON from "superjson";
 /**
  * @internal
  */
-export async function spawnIsolatedTestEnvironment(t: Deno.TestContext, denoFlags: string[]) {
+export async function spawnIsolatedTestEnvironment(
+  t: Deno.TestContext,
+  denoFlags: string[],
+) {
   // deno-lint-ignore no-explicit-any
   let result: any;
   const port = getAvailablePort();

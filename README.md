@@ -32,7 +32,15 @@ isolatedTestCase("test name", () => {
 
 ## Permissions
 
-The minimum permissions required to run an isolated test case are `--allow-env=DENO_ISOLATED_TEST_CASE_CTX --allow-net --allow-run=deno`.
+The minimum permissions required to run an isolated test case are
+`--allow-env=DENO_ISOLATED_TEST_CASE_CTX --allow-net --allow-run=deno`.
+
+## Options
+
+| Option        | Description                                                                                    |
+| ------------- | ---------------------------------------------------------------------------------------------- |
+| assertFailure | If truthy, the test is expected to fail. A function can be passed to assert against the error. |
+| denoFlags     | Flags to pass to `deno run`.                                                                   |
 
 ## Limitations
 
