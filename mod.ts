@@ -13,17 +13,21 @@ export type Options = {
   /**
    * If truthy, the test is expected to fail. A function can be passed to assert against the error.
    */
-  assertFailure: boolean | ((error: unknown) => void | Promise<void>);
+  assertFailure?: boolean | ((error: unknown) => void | Promise<void>);
+  /**
+   * Flags to pass to `deno run`
+   */
+  denoFlags?: string[];
 };
 
 const ctx = IsolatedTestContextWithConnection.fromEnv();
 let wasTestRun = false;
 addEventListener("unload", () => {
-  if (wasTestRun) {
+  if (!ctx || wasTestRun) {
     return;
   }
-  console.error("ERROR: NO TOP-LEVEL TEST DETECTED");
-  Deno.exitCode = 1;
+  console.error("ERROR: No test case was run");
+  Deno.exit(1);
 });
 
 /**
@@ -52,6 +56,12 @@ export function isolatedTestCase(
     if (ctx.name !== name) {
       return;
     }
+
+    if (wasTestRun) {
+      console.error(`ERROR: Detected multiple tests with the same name: ${name}`);
+      Deno.exit(1);
+    }
+
     wasTestRun = true;
     runTestCase(ctx, fn);
     return;
@@ -66,13 +76,13 @@ export function isolatedTestCase(
     fn: async (t) => {
       if (options?.assertFailure) {
         const error = await assertRejects(() =>
-          spawnIsolatedTestEnvironment(t)
+          spawnIsolatedTestEnvironment(t, options.denoFlags ?? [])
         );
         if (typeof options.assertFailure === "function") {
           await Promise.resolve(options.assertFailure(error));
         }
       } else {
-        await spawnIsolatedTestEnvironment(t);
+        await spawnIsolatedTestEnvironment(t, options?.denoFlags ?? []);
       }
     },
   });

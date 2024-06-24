@@ -25,3 +25,10 @@ isolatedTestCase("assert error", () => {
     assertEquals(error.name, "AssertionError");
   },
 });
+
+isolatedTestCase("should pass deno flags to isolated process", () => {
+  // @ts-ignore -- V8 expose GC flag was passed
+  gc();
+}, {
+  denoFlags: ["--v8-flags=--expose_gc"],
+});
