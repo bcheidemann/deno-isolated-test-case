@@ -6,7 +6,13 @@ import {
 import { runTestCase } from "./src/runTestCase.ts";
 import { spawnIsolatedTestEnvironment } from "./src/spawnIsolatedTestEnvironment.ts";
 
+/**
+ * Options for running the test case.
+ */
 export type Options = {
+  /**
+   * If truthy, the test is expected to fail. A function can be passed to assert against the error.
+   */
   assertFailure: boolean | ((error: unknown) => void | Promise<void>);
 };
 
