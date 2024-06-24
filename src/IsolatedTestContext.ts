@@ -1,6 +1,6 @@
 /**
  * Similar to Deno.TestContext, but for tests running in their own isolated Deno instance.
- * 
+ *
  * @implements {Deno.TestContext}
  */
 export class IsolatedTestContext implements Deno.TestContext {
