@@ -1,6 +1,7 @@
 {
   "name": "@bcheidemann/deno-isolated-test-case",
   "version": "0.3.0",
+  "license": "MIT",
   "tasks": {
     "test": "deno test --allow-env=DENO_ISOLATED_TEST_CASE_CTX --allow-net --allow-run=deno"
   },
