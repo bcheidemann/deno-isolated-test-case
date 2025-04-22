@@ -9,7 +9,7 @@ import { spawnIsolatedTestEnvironment } from "./src/spawnIsolatedTestEnvironment
 /**
  * Options for running the test case.
  */
-export type Options = {
+export interface Options extends Omit<Deno.TestDefinition, "fn" | "name"> {
   /**
    * If truthy, the test is expected to fail. A function can be passed to assert against the error.
    */
@@ -18,7 +18,7 @@ export type Options = {
    * Flags to pass to `deno run`.
    */
   denoFlags?: string[];
-};
+}
 
 const ctx = IsolatedTestContextWithConnection.fromEnv();
 let wasTestRun = false;
@@ -70,11 +70,12 @@ export function isolatedTestCase(
   }
 
   Deno.test({
-    name,
     permissions: {
       run: ["deno"],
       net: true,
     },
+    ...options,
+    name,
     fn: async (t) => {
       if (options?.assertFailure) {
         const error = await assertRejects(() =>

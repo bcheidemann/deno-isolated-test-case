@@ -1,4 +1,4 @@
-import { assertEquals, assertInstanceOf } from "@std/assert";
+import { assertEquals, assertInstanceOf, fail } from "@std/assert";
 import { isolatedTestCase } from "./mod.ts";
 
 if (!Deno.env.get("DENO_ISOLATED_TEST_CASE_CTX")) {
@@ -31,4 +31,10 @@ isolatedTestCase("should pass deno flags to isolated process", () => {
   gc();
 }, {
   denoFlags: ["--v8-flags=--expose_gc"],
+});
+
+isolatedTestCase("should pass options to Deno.test", () => {
+  fail("should not run this test");
+}, {
+  ignore: true,
 });
