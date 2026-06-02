@@ -30,8 +30,8 @@ export async function spawnIsolatedTestEnvironment(
     clearEnv: options?.denoCommand?.clearEnv ?? true,
     env: {
       ...options?.denoCommand?.env,
-      DENO_ISOLATED_TEST_CASE_CTX:
-        IsolatedTestContextWithConnection.serializeFromDenoTestContext(t, port),
+      DENO_ISOLATED_TEST_CASE_CTX: IsolatedTestContextWithConnection
+        .serializeFromDenoTestContext(t, port),
     },
     stdout: "inherit",
     stdin: "inherit",
