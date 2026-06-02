@@ -35,12 +35,16 @@ isolatedTestCase("test name", () => {
 The minimum permissions required to run an isolated test case are
 `--allow-env=DENO_ISOLATED_TEST_CASE_CTX --allow-net --allow-run=deno`.
 
+Note that currently, the child process running the test is spawned with the
+`--allow-all` flag. This may change in future versions.
+
 ## Options
 
 | Option        | Description                                                                                    |
 | ------------- | ---------------------------------------------------------------------------------------------- |
 | assertFailure | If truthy, the test is expected to fail. A function can be passed to assert against the error. |
 | denoFlags     | Flags to pass to `deno run`.                                                                   |
+| denoCommand   | Options to pass to `Deno.Command` when spawning the child process.                             |
 
 ## Limitations
 
@@ -55,6 +59,30 @@ Since your test runs in an isolated Deno process, it will not be aware of other
 snapshots in your test file. If you assert snapshots across multiple tests, only
 the last tests snapshots will be captured. The solution is to manually override
 the snapshot file name to be unique per test.
+
+### Environment Variables
+
+By default, the child process running the test case will not inherit any of the
+environment variables from the parent process. If you want the test case to
+inherit environment variables, you can configure the following options:
+
+```ts
+isolatedTestCase("test name", () => {
+  // Your test case
+}, {
+  denoCommand: {
+    clearEnv: false,
+    env: {
+      // Note that you may need to clear LD_ and DYLD_ variables manually. For
+      // more information, see https://github.com/denoland/deno/issues/26839#issuecomment-2471239817
+      LD_LIBRARY_PATH: "",
+      LD_PRELOAD: "",
+      DYLD_FALLBACK_LIBRARY_PATH: "",
+      // ...
+    },
+  },
+});
+```
 
 ### Error Stack Traces
 

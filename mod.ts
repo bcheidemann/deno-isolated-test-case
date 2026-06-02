@@ -18,6 +18,20 @@ export interface Options extends Omit<Deno.TestDefinition, "fn" | "name"> {
    * Flags to pass to `deno run`.
    */
   denoFlags?: string[];
+  /**
+   * Options to pass to `Deno.Command` when spawning the child process.
+   */
+  denoCommand?: Pick<Deno.CommandOptions, "clearEnv" | "env"> & {
+    /**
+     * Clear environmental variables from parent process.
+     *
+     * Doesn’t guarantee that only env variables are present, as the OS may set
+     * environmental variables for processes.
+     *
+     * @default `true`
+     */
+    clearEnv?: boolean;
+  };
 }
 
 const ctx = IsolatedTestContextWithConnection.fromEnv();
@@ -79,13 +93,13 @@ export function isolatedTestCase(
     fn: async (t) => {
       if (options?.assertFailure) {
         const error = await assertRejects(() =>
-          spawnIsolatedTestEnvironment(t, options.denoFlags ?? [])
+          spawnIsolatedTestEnvironment(t, options)
         );
         if (typeof options.assertFailure === "function") {
           await Promise.resolve(options.assertFailure(error));
         }
       } else {
-        await spawnIsolatedTestEnvironment(t, options?.denoFlags ?? []);
+        await spawnIsolatedTestEnvironment(t, options);
       }
     },
   });

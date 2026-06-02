@@ -2,33 +2,34 @@ import { assert } from "@std/assert";
 import { getAvailablePort } from "@std/net";
 import { IsolatedTestContextWithConnection } from "./IsolatedTestContext.ts";
 import SuperJSON from "superjson";
+import type { Options } from "@bcheidemann/deno-isolated-test-case";
 
 /**
  * @internal
  */
 export async function spawnIsolatedTestEnvironment(
   t: Deno.TestContext,
-  denoFlags: string[],
+  options: Options | undefined,
 ) {
   // deno-lint-ignore no-explicit-any
   let result: any;
   const port = getAvailablePort();
-  const server = Deno.serve(
-    { port, onListen: () => {} },
-    async (req) => {
-      result = SuperJSON.parse(await req.text());
-      return new Response();
-    },
-  );
+  const server = Deno.serve({ port, onListen: () => {} }, async (req) => {
+    result = SuperJSON.parse(await req.text());
+    return new Response();
+  });
   const cmd = new Deno.Command("deno", {
+    ...options?.denoCommand,
     args: [
       "run",
-      ...denoFlags,
+      ...(options?.denoFlags ?? []),
       "--allow-all",
       t.origin,
       ...Deno.args,
     ],
+    clearEnv: options?.denoCommand?.clearEnv ?? true,
     env: {
+      ...options?.denoCommand?.env,
       DENO_ISOLATED_TEST_CASE_CTX: IsolatedTestContextWithConnection
         .serializeFromDenoTestContext(t, port),
     },
