@@ -91,3 +91,9 @@ property. In order to ensure useful stack traces in our tests, we manually
 append the stack trace to the error message. This ensures stack traces are
 reported properly in tests, but it means that the message includes the stack
 trace.
+
+### Windows Support
+
+This project supports Linux and MacOS. Tests are currently failing on Windows in
+CI, and I don't have access to a Windows development machine to resolve this
+issue. Contributions from Windows developers are welcome.
