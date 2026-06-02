@@ -33,7 +33,8 @@ isolatedTestCase("test name", () => {
 ## Permissions
 
 The minimum permissions required to run an isolated test case are
-`--allow-env=DENO_ISOLATED_TEST_CASE_CTX --allow-net --allow-run=deno`.
+`--allow-env=DENO_ISOLATED_TEST_CASE_CTX --allow-net --allow-run=deno`. On
+Windows, access to the `SYSTEMROOT` environment variable is also required.
 
 Note that currently, the child process running the test is spawned with the
 `--allow-all` flag. This may change in future versions.
@@ -91,9 +92,3 @@ property. In order to ensure useful stack traces in our tests, we manually
 append the stack trace to the error message. This ensures stack traces are
 reported properly in tests, but it means that the message includes the stack
 trace.
-
-### Windows Support
-
-This project supports Linux and MacOS. Tests are currently failing on Windows in
-CI, and I don't have access to a Windows development machine to resolve this
-issue. Contributions from Windows developers are welcome.
