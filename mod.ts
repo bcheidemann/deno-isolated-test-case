@@ -87,6 +87,7 @@ export function isolatedTestCase(
     permissions: {
       run: ["deno"],
       net: true,
+      env: Deno.build.os === "windows" ? ["SYSTEMROOT", "WINDIR"] : false,
     },
     ...options,
     name,

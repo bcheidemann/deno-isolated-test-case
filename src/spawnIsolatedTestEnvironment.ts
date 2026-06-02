@@ -18,7 +18,7 @@ export async function spawnIsolatedTestEnvironment(
     result = SuperJSON.parse(await req.text());
     return new Response();
   });
-  // Windows requires access to SystemRoot and WINDIR, otherwise TCP connections
+  // Windows requires access to SYSTEMROOT and WINDIR, otherwise TCP connections
   // in the child process will fail with error 10106.
   const windowsSystemEnv = Deno.build.os === "windows"
     ? Object.fromEntries(
