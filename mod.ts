@@ -5,6 +5,7 @@ import {
 } from "./src/IsolatedTestContext.ts";
 import { runTestCase } from "./src/runTestCase.ts";
 import { spawnIsolatedTestEnvironment } from "./src/spawnIsolatedTestEnvironment.ts";
+import { WindowsRequiredEnvs } from "./src/windows.ts";
 
 /**
  * Options for running the test case.
@@ -87,7 +88,7 @@ export function isolatedTestCase(
     permissions: {
       run: ["deno"],
       net: true,
-      env: Deno.build.os === "windows" ? ["SYSTEMROOT", "WINDIR"] : false,
+      env: Deno.build.os === "windows" ? WindowsRequiredEnvs : false,
     },
     ...options,
     name,

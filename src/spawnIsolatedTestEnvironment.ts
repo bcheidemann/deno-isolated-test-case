@@ -3,6 +3,7 @@ import { getAvailablePort } from "@std/net";
 import { IsolatedTestContextWithConnection } from "./IsolatedTestContext.ts";
 import SuperJSON from "superjson";
 import type { Options } from "@bcheidemann/deno-isolated-test-case";
+import { WindowsRequiredEnvs } from "./windows.ts";
 
 /**
  * @internal
@@ -22,7 +23,7 @@ export async function spawnIsolatedTestEnvironment(
   // in the child process will fail with error 10106.
   const windowsSystemEnv = Deno.build.os === "windows"
     ? Object.fromEntries(
-      ["SYSTEMROOT", "WINDIR"].flatMap((key) => {
+      WindowsRequiredEnvs.flatMap((key) => {
         const val = Deno.env.get(key);
         return val !== undefined ? [[key, val]] : [];
       }),
