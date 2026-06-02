@@ -20,14 +20,15 @@ export async function spawnIsolatedTestEnvironment(
   });
   // Windows requires access to SystemRoot and WINDIR, otherwise TCP connections
   // in the child process will fail with error 10106.
-  const windowsSystemEnv = Deno.build.os === "windows"
-    ? Object.fromEntries(
-      ["SystemRoot", "WINDIR"].flatMap((key) => {
-        const val = Deno.env.get(key);
-        return val !== undefined ? [[key, val]] : [];
-      }),
-    )
-    : {};
+  const windowsSystemEnv =
+    Deno.build.os === "windows"
+      ? Object.fromEntries(
+          ["SYSTEMROOT", "WINDIR"].flatMap((key) => {
+            const val = Deno.env.get(key);
+            return val !== undefined ? [[key, val]] : [];
+          }),
+        )
+      : {};
 
   const cmd = new Deno.Command(Deno.execPath(), {
     ...options?.denoCommand,
@@ -42,8 +43,8 @@ export async function spawnIsolatedTestEnvironment(
     env: {
       ...windowsSystemEnv,
       ...options?.denoCommand?.env,
-      DENO_ISOLATED_TEST_CASE_CTX: IsolatedTestContextWithConnection
-        .serializeFromDenoTestContext(t, port),
+      DENO_ISOLATED_TEST_CASE_CTX:
+        IsolatedTestContextWithConnection.serializeFromDenoTestContext(t, port),
     },
     stdout: "inherit",
     stdin: "inherit",
