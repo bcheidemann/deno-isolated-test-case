@@ -18,7 +18,7 @@ export async function spawnIsolatedTestEnvironment(
     result = SuperJSON.parse(await req.text());
     return new Response();
   });
-  const cmd = new Deno.Command("deno", {
+  const cmd = new Deno.Command(Deno.execPath(), {
     ...options?.denoCommand,
     args: [
       "run",
@@ -30,8 +30,8 @@ export async function spawnIsolatedTestEnvironment(
     clearEnv: options?.denoCommand?.clearEnv ?? true,
     env: {
       ...options?.denoCommand?.env,
-      DENO_ISOLATED_TEST_CASE_CTX: IsolatedTestContextWithConnection
-        .serializeFromDenoTestContext(t, port),
+      DENO_ISOLATED_TEST_CASE_CTX:
+        IsolatedTestContextWithConnection.serializeFromDenoTestContext(t, port),
     },
     stdout: "inherit",
     stdin: "inherit",
